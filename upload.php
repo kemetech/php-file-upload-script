@@ -4,13 +4,6 @@
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 
-/*  
-    To prevent duplicated uploads store a value for 
-    the uploaded file in the session and use it to
-    redirect to success page after successful upload. 
-*/
-
-
 
 // Constants for allowed file extensions, file MIME types, and maximum file size
 $max_size = 4 * 1024 * 1024; // 4 MB
@@ -96,19 +89,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                             // Execute the query
                             if ($stmt->execute()){
                                 
-
-
-                                
                                 // Delete the uploaded file
                                 if (file_exists($file_tmp)) {
                                     unlink($file_tmp);
                                 }
 
-
-
                                 // Redirect to a different page to prevent duplicate uploads on page refresh
                                 header("Location: success.php");
-
+                                exit;
 
                             } else {
 
