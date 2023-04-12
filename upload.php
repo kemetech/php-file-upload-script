@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
@@ -10,14 +10,6 @@ ini_set('display_errors', 1);
     redirect to success page after successful upload. 
 */
 
-// Check if file has been uploaded before
-if(isset($_SESSION['file_uploaded']) && $_SESSION['file_uploaded'] === true){
-
-    // Show a message indicating that the file has already been uploaded
-    echo "File has already been uploaded.";
-    exit; // Exit the script to prevent further processing
-
-}
 
 
 // Constants for allowed file extensions, file MIME types, and maximum file size
@@ -66,6 +58,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                         if(move_uploaded_file($file_tmp, $upload_path)){
 
+                            // Check if file has been uploaded before
+
                             // Connect to the database using PDO
                             $user = 'root';
                             $pass = '';
@@ -101,10 +95,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                             // Execute the query
                             if ($stmt->execute()){
+                                
 
 
-                                // Set a session flag to indicate that the file has been uploaded
-                                $_SESSION['file_uploaded'] = true;
+                                
+                                // Delete the uploaded file
+                                if (file_exists($file_tmp)) {
+                                    unlink($file_tmp);
+                                }
+
+
 
                                 // Redirect to a different page to prevent duplicate uploads on page refresh
                                 header("Location: success.php");
@@ -152,6 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
 }
+
 
 
 
