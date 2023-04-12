@@ -1,5 +1,4 @@
 <?php
-session_start();
 require('upload.php');
 ?>
 <!DOCTYPE html>
@@ -16,10 +15,6 @@ require('upload.php');
         <label for="file">Select a file to upload</label>
         <input type="file" name="file" id="file">
         <input type="submit" name="upload file" id="">
-    </form>
-
-
-    
-    
+    </form>  
 </body>
 </html>
